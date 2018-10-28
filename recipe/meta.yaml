@@ -18,7 +18,7 @@ build:
   script:
   - set PYTHONHASHSEED=0  # [win]
   - export PYTHONHASHSEED=0  # [not win]
-  - "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+  - "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir --progress-bar off -vvv"
 
 requirements:
   host:
