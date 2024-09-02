@@ -7,6 +7,7 @@ package:
 source:
   url: https://pypi.io/packages/source/l/libarchive-c/libarchive-c-{{ version }}.tar.gz
   sha256: 7bcce24ea6c0fa3bc62468476c6d2f6264156db2f04878a372027c10615a2721
+
 build:
   number: 1
   script:
@@ -22,6 +23,7 @@ requirements:
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   host:
     - pip
+    - setuptools
     - python
   run:
     - libarchive
