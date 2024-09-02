@@ -8,7 +8,7 @@ source:
   url: https://pypi.io/packages/source/l/libarchive-c/libarchive-c-{{ version }}.tar.gz
   sha256: 7bcce24ea6c0fa3bc62468476c6d2f6264156db2f04878a372027c10615a2721
 build:
-  number: 0
+  number: 1
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
     # https://github.com/conda-forge/python-libarchive-c-feedstock/issues/35
