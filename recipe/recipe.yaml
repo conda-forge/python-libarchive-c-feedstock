@@ -24,7 +24,7 @@ requirements:
   host:
     - pip
     - setuptools
-    - python ${{ pythnon_min }}.*
+    - python ${{ python_min }}.*
   run:
     - libarchive
     - python >=${{ python_min }}
