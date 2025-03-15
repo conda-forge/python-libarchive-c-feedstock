@@ -21,7 +21,7 @@ PLAT = platform.system()
 WIN = PLAT == "Windows"
 OSX = PLAT == "Darwin"
 LINUX = PLAT == "Linux"
-UNIX = OSX or LINUX
+
 if not (LINUX or OSX or WIN):
     raise RuntimeError(f"Unknown platform: {PLAT}")
 
@@ -38,7 +38,9 @@ SKIPS = []
 PYTEST_K = []
 FAIL_UNDER = 0
 
-if UNIX:
+USE_SDIST_TESTS = True
+
+if USE_SDIST_TESTS:
     PYTEST += [str(TESTS_IN_SP_DIR)]
 
 if OSX:
@@ -81,7 +83,7 @@ def test_conda_forge_extract_fixture(path: str, in_tmp_path: Path) -> None:
 
 
 def preflight() -> int:
-    if UNIX:
+    if USE_SDIST_TESTS:
         print("... fetching", SDIST_URL, flush=True)
         with urllib.request.urlopen(SDIST_URL) as req:
             io = BytesIO(req.read())
