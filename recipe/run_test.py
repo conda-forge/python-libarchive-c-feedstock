@@ -22,8 +22,8 @@ WIN = PLAT == "Windows"
 OSX = PLAT == "Darwin"
 LINUX = PLAT == "Linux"
 UNIX = OSX or LINUX
-if not UNIX or WIN:
-    raise RuntimeError(f"Unknown platform:s {PLAT}")
+if not (LINUX or OSX or WIN):
+    raise RuntimeError(f"Unknown platform: {PLAT}")
 
 SP_DIR = Path(site.getsitepackages()[0])
 TESTS_IN_SP_DIR = SP_DIR / "tests"
@@ -42,7 +42,8 @@ if UNIX:
     PYTEST += [str(TESTS_IN_SP_DIR)]
 
 if OSX:
-    SKIPS = [
+    FAIL_UNDER = 76
+    SKIPS += [
         "test_fd",
         "test_files",
         "test_buffers",
