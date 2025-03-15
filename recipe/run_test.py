@@ -36,7 +36,6 @@ SDIST_EXTRACTED = HERE / f"src/libarchive_c-{PKG_VERSION}"
 PYTEST = ["pytest", "-vv", "--color=yes", "--tb=long", __file__]
 SKIPS = []
 PYTEST_K = []
-FAIL_UNDER = 0
 
 USE_SDIST_TESTS = True
 
@@ -52,9 +51,12 @@ if OSX:
         "atime_ctime",
         "custom_writer",
     ]
-
-if LINUX:
+elif LINUX:
     FAIL_UNDER = 79
+elif WIN:
+    # too many fails based on POSIX assumptions to be relevant
+    USE_SDIST_TESTS = False
+    FAIL_UNDER = 49
 
 COV = ["coverage"]
 RUN = ["run", "--source=libarchive", "--branch", "-m"]
