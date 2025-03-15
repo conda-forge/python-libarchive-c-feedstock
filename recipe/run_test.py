@@ -51,7 +51,7 @@ if OSX:
     ]
 
 if LINUX:
-    FAIL_UNDER = 83
+    FAIL_UNDER = 79
 
 COV = ["coverage"]
 RUN = ["run", "--source=libarchive", "--branch", "-m"]
