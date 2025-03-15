@@ -39,9 +39,6 @@ PYTEST_K = []
 
 USE_SDIST_TESTS = True
 
-if USE_SDIST_TESTS:
-    PYTEST += [str(TESTS_IN_SP_DIR)]
-
 if OSX:
     FAIL_UNDER = 76
     SKIPS += [
@@ -57,6 +54,9 @@ elif WIN:
     # too many fails based on POSIX assumptions to be relevant
     USE_SDIST_TESTS = False
     FAIL_UNDER = 49
+
+if USE_SDIST_TESTS:
+    PYTEST += [str(TESTS_IN_SP_DIR)]
 
 COV = ["coverage"]
 RUN = ["run", "--source=libarchive", "--branch", "-m"]
