@@ -26,7 +26,6 @@ requirements:
   run:
     - libarchive
     - python >=${{ python_min }}
-    - __${{ noarch_platform }}
 
 tests:
   - python:
