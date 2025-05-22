@@ -12,6 +12,7 @@ import platform
 from typing import Any
 from collections.abc import Iterator
 
+UTF8 = {"encoding": "utf-8"}
 PKG_VERSION = os.environ["PKG_VERSION"]
 SDIST_URL = (
     f"https://pypi.org/packages/source/l/libarchive-c/libarchive_c-{PKG_VERSION}.tar.gz"
@@ -92,6 +93,14 @@ def preflight() -> int:
         io.seek(0)
         with tarfile.open(fileobj=io, mode="r:gz") as tf:
             tf.extractall(HERE / "src")
+
+        test_entry = SDIST_EXTRACTED / "tests/test_entry.py"
+        print("... patching f-strings in", test_entry)
+        test_entry.write_text(
+            test_entry.read_text(**UTF8).replace("'21'", '"21"'),
+            **UTF8
+        )
+
         print("... copying into", SP_DIR)
         shutil.copytree(SDIST_EXTRACTED / "tests", TESTS_IN_SP_DIR)
         shutil.copy2(SDIST_EXTRACTED / "README.rst", SP_DIR / "README.rst")
