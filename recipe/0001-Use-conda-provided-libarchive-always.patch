@@ -1,0 +1,49 @@
+From 403baee48e7410b8394b1cc298d60a11576e49fe Mon Sep 17 00:00:00 2001
+From: Isuru Fernando <isuruf@gmail.com>
+Date: Fri, 8 Aug 2025 09:10:28 -0500
+Subject: [PATCH] Use conda provided libarchive always
+
+---
+ libarchive/ffi.py | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/libarchive/ffi.py b/libarchive/ffi.py
+index d960b59..d543c16 100644
+--- a/libarchive/ffi.py
++++ b/libarchive/ffi.py
+@@ -13,7 +13,9 @@ from ctypes.util import find_library
+ import logging
+ import mmap
+ import os
++import sys
+ import sysconfig
++import warnings
+ 
+ from .exception import ArchiveError
+ 
+@@ -22,7 +24,21 @@ logger = logging.getLogger('libarchive')
+ 
+ page_size = mmap.PAGESIZE
+ 
+-libarchive_path = os.environ.get('LIBARCHIVE') or find_library('archive')
++def get_conda_libarchive():
++  if sys.platform == 'darwin':
++    path = os.path.join(sys.prefix, "lib", "libarchive.dylib")
++  elif sys.platform == 'win32':
++    path = os.path.join(sys.prefix, "Library", "bin", "archive.dll")
++  else:
++    path = os.path.join(sys.prefix, "lib", "libarchive.so")
++
++  if os.path.exists(path):
++    return path
++  else:
++    warnings.warn(f"conda provided libarchive {path} not found")
++    return None
++
++libarchive_path = os.environ.get('LIBARCHIVE') or get_conda_libarchive() or find_library('archive')
+ libarchive = ctypes.cdll.LoadLibrary(libarchive_path)
+ 
+ 
+-- 
+2.45.2
+
