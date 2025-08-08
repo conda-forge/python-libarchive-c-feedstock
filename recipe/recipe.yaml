@@ -11,9 +11,11 @@ package:
 source:
   url: https://pypi.org/packages/source/l/libarchive-c/libarchive_c-${{ version }}.tar.gz
   sha256: 5ddb42f1a245c927e7686545da77159859d5d4c6d00163c59daff4df314dae82
+  patches:
+    - 0001-Use-conda-provided-libarchive-always.patch
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script:
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
